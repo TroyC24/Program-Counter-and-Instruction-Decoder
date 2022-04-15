@@ -1,0 +1,21 @@
+module toplevel (clk,reset,RD,RS1,RS2,IMM,out,cur,next);
+	input clk,reset;
+	output [4:0] RD,RS1,RS2;
+	output [11:0] IMM;
+	output [31:0] out;
+	
+	output [7:0] cur,next;
+	
+	wire [7:0] PC,PC4;
+	
+	PC inst0 (PC4,PC,clk,reset);
+	
+	plus4 inst1 (PC,PC4);
+	
+	ROM inst2 (PC,out);
+	
+	Idecoder inst3 (out,RD,RS1,RS2,IMM);
+	
+	assign cur = PC;
+	assign next = PC4;
+endmodule
